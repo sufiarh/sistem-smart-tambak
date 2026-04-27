@@ -1,0 +1,130 @@
+# ============================================================
+# SMART TAMBAK — Konfigurasi Utama
+# Tambakmulyo, Kebumen, Jawa Tengah
+# ============================================================
+
+app:
+  name: "Smart Tambak Udang Vaname"
+  version: "1.0.0"
+  simulation: true          # true = laptop, false = HG680P production
+
+# ============================================================
+# KONEKSI HARDWARE
+# ============================================================
+
+hardware:
+  rs485_port: "/dev/ttyUSB0"     # Port USB to RS485 Converter
+  rs485_baudrate: 9600
+  rs485_timeout: 1               # Detik timeout baca sensor
+  relay_vendor_id: 0x16c0        # Vendor ID USB Relay Module (HID)
+  relay_product_id: 0x05df       # Product ID USB Relay Module (HID)
+
+# ============================================================
+# SENSOR — Alamat Modbus RS485
+# ============================================================
+
+sensors:
+  read_interval: 5               # Baca sensor setiap N detik
+  ph:
+    address: 1
+    name: "pH Air"
+    unit: "pH"
+  do:
+    address: 2
+    name: "Oksigen Terlarut"
+    unit: "mg/L"
+  temperature:
+    address: 3
+    name: "Suhu Air"
+    unit: "°C"
+  salinity:
+    address: 4
+    name: "Salinitas"
+    unit: "ppt"
+  turbidity:
+    address: 5
+    name: "Turbiditas"
+    unit: "NTU"
+  water_level:
+    address: 6
+    name: "Ketinggian Air"
+    unit: "meter"
+  light:
+    address: 7
+    name: "Intensitas Cahaya"
+    unit: "lux"
+
+# ============================================================
+# THRESHOLD — Nilai Ambang Batas Trigger
+# ============================================================
+
+threshold:
+  # Aerator — berbasis DO
+  do_aerator_on: 4.0             # DO di bawah ini → aerator ON
+  do_aerator_off: 5.5            # DO di atas ini → aerator OFF
+
+  # Pompa Inlet — berbasis pH, salinitas, water level
+  ph_min: 7.5                    # pH di bawah ini → pompa inlet ON
+  ph_max: 8.5                    # pH di atas ini → pompa inlet ON
+  salinity_max: 25.0             # Salinitas di atas ini → pompa inlet ON
+  water_level_min: 1.0           # Level di bawah ini → pompa inlet ON
+
+  # Pompa Outlet — berbasis turbiditas
+  turbidity_on: 50.0             # Turbiditas di atas ini → pompa outlet ON
+  turbidity_off: 20.0            # Turbiditas di bawah ini → pompa outlet OFF
+
+  # Feeder — berbasis DO saat jadwal tiba
+  do_feeder_min: 4.0             # DO harus di atas ini agar feeder aktif
+
+  # Lampu — berbasis cahaya
+  light_threshold: 500           # Lux di bawah ini → lampu ON (malam)
+
+# ============================================================
+# JADWAL FEEDER
+# ============================================================
+
+feeder:
+  duration_seconds: 30           # Feeder aktif selama N detik
+  retry_delay_minutes: 30        # Tunda N menit jika DO rendah
+  schedules:
+    - "07:00"
+    - "12:00"
+    - "17:00"
+
+# ============================================================
+# RELAY — Pemetaan Channel ke Aktuator
+# ============================================================
+
+relay:
+  aerator_1: 1                   # CH1 → Aerator #1
+  aerator_2: 2                   # CH2 → Aerator #2
+  pump_in: 3                     # CH3 → Pompa Inlet
+  pump_out: 4                    # CH4 → Pompa Outlet
+  feeder: 5                      # CH5 → Auto Feeder
+  lamp: 6                        # CH6 → Lampu Penerangan
+
+# ============================================================
+# WEB SERVER & DATABASE
+# ============================================================
+
+server:
+  port: 8080
+  host: "0.0.0.0"               # Dengarkan semua interface
+
+database:
+  path: "./data/tambak.db"       # Lokasi file SQLite
+
+# ============================================================
+# SIMULASI (hanya aktif jika simulation: true)
+# ============================================================
+
+simulation:
+  update_interval: 5             # Detik antar update data dummy
+  # Range nilai random sensor simulasi
+  ph_range: [7.0, 9.0]
+  do_range: [2.0, 7.0]
+  temperature_range: [25.0, 32.0]
+  salinity_range: [12.0, 28.0]
+  turbidity_range: [10.0, 80.0]
+  water_level_range: [0.8, 1.5]
+  light_range: [0.0, 1000.0]

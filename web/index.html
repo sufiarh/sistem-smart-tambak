@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Tambak — Dashboard</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>🦐 Smart Tambak</h1>
+      <span class="subtitle">Tambakmulyo, Kebumen</span>
+    </div>
+    <div class="header-right">
+      <div id="status-badge" class="badge badge-loading">Memuat...</div>
+      <span id="last-update" class="last-update">--</span>
+    </div>
+  </header>
+
+  <!-- NAVIGASI TAB -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
+    <button class="tab-btn" onclick="showTab('history')">📈 Historis</button>
+    <button class="tab-btn" onclick="showTab('control')">🎛️ Kontrol</button>
+    <button class="tab-btn" onclick="showTab('energy')">⚡ Energi</button>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- TAB 1 — DASHBOARD UTAMA -->
+  <!-- ============================================================ -->
+  <div id="tab-dashboard" class="tab-content active">
+
+    <!-- Indikator Status Besar -->
+    <div id="status-bar" class="status-bar status-normal">
+      <span id="status-text">Semua parameter normal</span>
+    </div>
+
+    <!-- Grid Sensor -->
+    <section class="section-title">📡 Kualitas Air — Real Time</section>
+    <div class="sensor-grid">
+      <div class="sensor-card" id="card-ph">
+        <div class="sensor-icon">🔵</div>
+        <div class="sensor-label">pH Air</div>
+        <div class="sensor-value" id="val-ph">--</div>
+        <div class="sensor-unit">pH</div>
+        <div class="sensor-range">Normal: 7.5 – 8.5</div>
+        <div class="sensor-badge" id="badge-ph">--</div>
+      </div>
+      <div class="sensor-card" id="card-do">
+        <div class="sensor-icon">🟢</div>
+        <div class="sensor-label">Oksigen Terlarut</div>
+        <div class="sensor-value" id="val-do">--</div>
+        <div class="sensor-unit">mg/L</div>
+        <div class="sensor-range">Normal: &gt; 4.0</div>
+        <div class="sensor-badge" id="badge-do">--</div>
+      </div>
+      <div class="sensor-card" id="card-temp">
+        <div class="sensor-icon">🌡️</div>
+        <div class="sensor-label">Suhu Air</div>
+        <div class="sensor-value" id="val-temp">--</div>
+        <div class="sensor-unit">°C</div>
+        <div class="sensor-range">Normal: 26 – 30°C</div>
+        <div class="sensor-badge" id="badge-temp">--</div>
+      </div>
+      <div class="sensor-card" id="card-sal">
+        <div class="sensor-icon">🧂</div>
+        <div class="sensor-label">Salinitas</div>
+        <div class="sensor-value" id="val-sal">--</div>
+        <div class="sensor-unit">ppt</div>
+        <div class="sensor-range">Normal: 15 – 25 ppt</div>
+        <div class="sensor-badge" id="badge-sal">--</div>
+      </div>
+      <div class="sensor-card" id="card-turb">
+        <div class="sensor-icon">💧</div>
+        <div class="sensor-label">Turbiditas</div>
+        <div class="sensor-value" id="val-turb">--</div>
+        <div class="sensor-unit">NTU</div>
+        <div class="sensor-range">Normal: &lt; 50 NTU</div>
+        <div class="sensor-badge" id="badge-turb">--</div>
+      </div>
+      <div class="sensor-card" id="card-level">
+        <div class="sensor-icon">📏</div>
+        <div class="sensor-label">Ketinggian Air</div>
+        <div class="sensor-value" id="val-level">--</div>
+        <div class="sensor-unit">meter</div>
+        <div class="sensor-range">Normal: &gt; 1.0 m</div>
+        <div class="sensor-badge" id="badge-level">--</div>
+      </div>
+      <div class="sensor-card" id="card-light">
+        <div class="sensor-icon">☀️</div>
+        <div class="sensor-label">Intensitas Cahaya</div>
+        <div class="sensor-value" id="val-light">--</div>
+        <div class="sensor-unit">lux</div>
+        <div class="sensor-range">Malam: &lt; 500 lux</div>
+        <div class="sensor-badge" id="badge-light">--</div>
+      </div>
+    </div>
+
+    <!-- Status Aktuator -->
+    <section class="section-title">⚙️ Status Aktuator</section>
+    <div class="actuator-grid">
+      <div class="actuator-card">
+        <div class="actuator-icon">🌬️</div>
+        <div class="actuator-name">Aerator #1</div>
+        <div class="actuator-status" id="act-aerator1">--</div>
+        <div class="actuator-mode" id="mode-aerator1">AUTO</div>
+      </div>
+      <div class="actuator-card">
+        <div class="actuator-icon">🌬️</div>
+        <div class="actuator-name">Aerator #2</div>
+        <div class="actuator-status" id="act-aerator2">--</div>
+        <div class="actuator-mode" id="mode-aerator2">AUTO</div>
+      </div>
+      <div class="actuator-card">
+        <div class="actuator-icon">💧</div>
+        <div class="actuator-name">Pompa Inlet</div>
+        <div class="actuator-status" id="act-pump_in">--</div>
+        <div class="actuator-mode" id="mode-pump_in">AUTO</div>
+      </div>
+      <div class="actuator-card">
+        <div class="actuator-icon">💧</div>
+        <div class="actuator-name">Pompa Outlet</div>
+        <div class="actuator-status" id="act-pump_out">--</div>
+        <div class="actuator-mode" id="mode-pump_out">AUTO</div>
+      </div>
+      <div class="actuator-card">
+        <div class="actuator-icon">🍤</div>
+        <div class="actuator-name">Auto Feeder</div>
+        <div class="actuator-status" id="act-feeder">--</div>
+        <div class="actuator-mode" id="mode-feeder">AUTO</div>
+      </div>
+      <div class="actuator-card">
+        <div class="actuator-icon">💡</div>
+        <div class="actuator-name">Lampu</div>
+        <div class="actuator-status" id="act-lamp">--</div>
+        <div class="actuator-mode" id="mode-lamp">AUTO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TAB 2 — HISTORIS -->
+  <!-- ============================================================ -->
+  <div id="tab-history" class="tab-content">
+    <section class="section-title">📈 Grafik Historis 24 Jam</section>
+    <div class="chart-controls">
+      <label>Tampilkan:
+        <select id="chart-param" onchange="renderChart()">
+          <option value="do">Oksigen Terlarut (DO)</option>
+          <option value="ph">pH Air</option>
+          <option value="temperature">Suhu</option>
+          <option value="salinity">Salinitas</option>
+          <option value="turbidity">Turbiditas</option>
+          <option value="water_level">Ketinggian Air</option>
+        </select>
+      </label>
+    </div>
+    <div class="chart-container">
+      <canvas id="sensorChart"></canvas>
+    </div>
+    <div id="history-table-container">
+      <table class="data-table" id="history-table">
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>pH</th>
+            <th>DO</th>
+            <th>Suhu</th>
+            <th>Salinitas</th>
+            <th>Turbiditas</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody id="history-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TAB 3 — KONTROL MANUAL -->
+  <!-- ============================================================ -->
+  <div id="tab-control" class="tab-content">
+    <section class="section-title">🎛️ Kontrol Manual Aktuator</section>
+    <div class="info-box">
+      ⚠️ Mode MANUAL menonaktifkan trigger otomatis untuk aktuator tersebut.
+      Pastikan kembali ke mode AUTO setelah selesai.
+    </div>
+    <div class="control-grid">
+      <div class="control-card" id="ctrl-aerator1">
+        <div class="control-icon">🌬️</div>
+        <div class="control-name">Aerator #1</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('aerator1', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('aerator1', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-aerator1"
+            onclick="setMode('aerator1', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-aerator1"
+            onclick="setMode('aerator1', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+      <div class="control-card" id="ctrl-aerator2">
+        <div class="control-icon">🌬️</div>
+        <div class="control-name">Aerator #2</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('aerator2', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('aerator2', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-aerator2"
+            onclick="setMode('aerator2', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-aerator2"
+            onclick="setMode('aerator2', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+      <div class="control-card" id="ctrl-pump_in">
+        <div class="control-icon">💧</div>
+        <div class="control-name">Pompa Inlet</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('pump_in', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('pump_in', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-pump_in"
+            onclick="setMode('pump_in', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-pump_in"
+            onclick="setMode('pump_in', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+      <div class="control-card" id="ctrl-pump_out">
+        <div class="control-icon">💧</div>
+        <div class="control-name">Pompa Outlet</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('pump_out', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('pump_out', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-pump_out"
+            onclick="setMode('pump_out', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-pump_out"
+            onclick="setMode('pump_out', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+      <div class="control-card" id="ctrl-feeder">
+        <div class="control-icon">🍤</div>
+        <div class="control-name">Auto Feeder</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('feeder', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('feeder', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-feeder"
+            onclick="setMode('feeder', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-feeder"
+            onclick="setMode('feeder', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+      <div class="control-card" id="ctrl-lamp">
+        <div class="control-icon">💡</div>
+        <div class="control-name">Lampu</div>
+        <div class="control-buttons">
+          <button class="btn-on" onclick="controlRelay('lamp', true)">ON</button>
+          <button class="btn-off" onclick="controlRelay('lamp', false)">OFF</button>
+        </div>
+        <div class="mode-toggle">
+          <button class="btn-auto active" id="btn-auto-lamp"
+            onclick="setMode('lamp', 'AUTO')">AUTO</button>
+          <button class="btn-manual" id="btn-manual-lamp"
+            onclick="setMode('lamp', 'MANUAL')">MANUAL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TAB 4 — ENERGI -->
+  <!-- ============================================================ -->
+  <div id="tab-energy" class="tab-content">
+    <section class="section-title">⚡ Monitoring Energi PLTS</section>
+    <div class="energy-grid">
+      <div class="energy-card">
+        <div class="energy-icon">☀️</div>
+        <div class="energy-label">Panel Surya</div>
+        <div class="energy-value">6 kWp</div>
+        <div class="energy-sub">14 panel × 430 Wp</div>
+      </div>
+      <div class="energy-card">
+        <div class="energy-icon">🔋</div>
+        <div class="energy-label">Kapasitas Baterai</div>
+        <div class="energy-value">38.4 kWh</div>
+        <div class="energy-sub">LiFePO4 4×200Ah 48V</div>
+      </div>
+      <div class="energy-card">
+        <div class="energy-icon">⚡</div>
+        <div class="energy-label">Kebutuhan Harian</div>
+        <div class="energy-value">20.8 kWh</div>
+        <div class="energy-sub">Estimasi total beban</div>
+      </div>
+      <div class="energy-card">
+        <div class="energy-icon">🌅</div>
+        <div class="energy-label">Iradiasi Kebumen</div>
+        <div class="energy-value">4.5 jam/hari</div>
+        <div class="energy-sub">Rata-rata pesisir selatan</div>
+      </div>
+    </div>
+    <div class="info-box">
+      💡 Sistem ini sepenuhnya mandiri energi menggunakan PLTS 6 kWp
+      dengan backup baterai LiFePO4 untuk 2 malam tanpa sinar matahari.
+      Tidak ada ketergantungan terhadap jaringan listrik PLN.
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
