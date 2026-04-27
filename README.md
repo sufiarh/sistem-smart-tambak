@@ -179,10 +179,31 @@ sudo systemctl enable smart-tambak && sudo systemctl start smart-tambak
 
 ---
 
+## 🏠 Control House
+
+![Control House Interior Layout](images/tata-letak-gubuk.png)
+*Figure 6 — Control House Interior Layout: SPS Components, MCB Panel, HG680P, Router — All in One Space*
+
+The control house is a centralized structure built at the edge of the pond. It contains all critical hardware:
+
+- ☀️ **Solar panels** mounted on the rooftop and external poles
+- 🔋 **SCC MPPT + LiFePO4 battery bank** for energy storage
+- 🔌 **Pure Sine Wave Inverter** — DC to AC 220V conversion
+- ⚡ **Smart MCB Panel** — 7 independently controlled power channels
+- 🧠 **STB HG680P** — system brain running Go binary
+- 📡 **WiFi Router** — internet connectivity for Cloudflare Tunnel
+
+### Hardware Gallery
+
+![Actuator & Sensor Hardware Gallery](images/hardware-gallery.png)
+*Figure 8 — Hardware Gallery: Paddle Wheel Aerators, Water Pumps, Auto Feeder, RS485 Sensors & Control Modules*
+
+---
+
 ## 🧠 Software Architecture
 
 ![Software Architecture Diagram](images/arsitektur-software.png)
-*Figure 6 — Go Software Architecture: 3 Parallel Goroutines + SQLite + Cloudflare Tunnel*
+*Figure 9 — Go Software Architecture: 3 Parallel Goroutines + SQLite + Cloudflare Tunnel*
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -213,13 +234,13 @@ sudo systemctl enable smart-tambak && sudo systemctl start smart-tambak
 ## 💻 Dashboard
 
 ![Dashboard Main](images/dashboard-utama.png)
-*Figure 7 — Main Dashboard: Sensor Values, System Status Indicator & Actuator States*
+*Figure 10 — Main Dashboard: Sensor Values, System Status Indicator & Actuator States*
 
 ![Historical Chart](images/dashboard-historis.png)
-*Figure 8 — Historical Data: 24-Hour Sensor Trend Charts (Per-Hour Aggregation)*
+*Figure 11 — Historical Data: 24-Hour Sensor Trend Charts (Per-Hour Aggregation)*
 
 ![Manual Control](images/dashboard-kontrol.png)
-*Figure 9 — Manual Control: AUTO/MANUAL Toggle + ON/OFF Per Actuator*
+*Figure 12 — Manual Control: AUTO/MANUAL Toggle + ON/OFF Per Actuator*
 
 The dashboard is a **Single Page App** with 4 tabs:
 
@@ -235,7 +256,7 @@ The dashboard is a **Single Page App** with 4 tabs:
 ## ☀️ Solar Power System
 
 ![SPS Wiring Schematic](images/skematik-plts.png)
-*Figure 10 — SPS Schematic: Panel → MPPT SCC → LiFePO4 Battery → Inverter → MCB Panel*
+*Figure 13 — SPS Schematic: Panel → MPPT SCC → LiFePO4 Battery → Inverter → MCB Panel*
 
 | Component | Specification | Function |
 |---|---|---|
@@ -282,7 +303,7 @@ feeder:
 ## 🗺️ Study Case
 
 ![Pond Top-View Layout](images/denah-tambak.png)
-*Figure 11 — Top-View Layout: 50m × 40m Pond with All Component Positions*
+*Figure 14 — Top-View Layout: 50m × 40m Pond with All Component Positions*
 
 | Parameter | Value |
 |---|---|
