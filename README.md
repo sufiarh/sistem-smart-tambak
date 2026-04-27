@@ -87,6 +87,9 @@ smart-tambak/
 ├── install.sh               # Automated installation script for Armbian Linux
 ├── smart-tambak.service     # Systemd autostart service on boot
 │
+├── documentations/
+│   ├── full technical documentation.pdf
+│
 ├── core/
 │   ├── sensor.go            # Structs, Modbus RTU, RS485 reading goroutine
 │   ├── controller.go        # Threshold trigger logic for all actuators
@@ -105,31 +108,6 @@ smart-tambak/
 ---
 
 ## 🚀 Quick Start
-
-### Simulation Mode (Linux Laptop / PC)
-
-> No hardware needed — sensors generate realistic random data for testing all trigger logic.
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/sufiarh/sistem-smart-tambak
-cd sistem-smart-tambak
-
-# 2. Install Go dependencies
-go mod tidy
-
-# 3. Make sure simulation mode is enabled in config.yaml
-#    app:
-#      simulation: true
-
-# 4. Build & run
-go build ./...
-go run main.go
-
-# 5. Open dashboard
-#    http://localhost:8080
-#    Password: petambak
-```
 
 ### Production Mode (STB HG680P — Armbian Linux)
 
@@ -314,14 +292,6 @@ feeder:
 | 🦐 Capacity | ±100,000 Pacific white shrimp |
 | ⚡ Energy | 6 kWp SPS — fully off-grid |
 | 🧠 System Brain | STB HG680P (Armbian Linux) |
-
----
-
-## 🌿 Sustainability Impact
-
-1. 🔋 **Energy Transition** — Solar power replaces PLN grid dependency at remote coastal ponds in Kebumen
-2. ⚡ **Energy Efficiency** — Trigger-based control ensures actuators only activate when truly needed
-3. 🌊 **Sustainable Aquaculture** — Precise monitoring reduces mortality, feed waste, and environmental impact
 
 ---
 
